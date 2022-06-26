@@ -3,9 +3,10 @@ import cv2
 from matplotlib import pyplot as plt
 
 
-def load_image(path, size=(1500, 1125)):
+def load_image(path, size=None):
     img = cv2.imread(path, cv2.COLOR_BGR2GRAY)
-    img = cv2.resize(img, size)
+    if size:
+        img = cv2.resize(img, size)
     return img
 
 
