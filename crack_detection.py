@@ -1,6 +1,7 @@
 from utils import *
 
-image_path = 'input/P1040059-s.JPG'
+# image_path = 'input/P1040059-s.JPG'
+image_path = 'input/P1040047-s.JPG'
 img = load_image(image_path)
 
 edges = canny_edge_detection(img)
