@@ -1,3 +1,5 @@
+# https://stackoverflow.com/questions/53755910/how-can-i-split-a-large-image-into-small-pieces-in-python
+
 # Required Libraries
 import cv2
 import numpy as np
@@ -5,7 +7,7 @@ from os import listdir
 from os.path import isfile, join
 import argparse
 
-split_size = 100
+split_size = 200
 
 # Argument parsing variable declared
 ap = argparse.ArgumentParser()
