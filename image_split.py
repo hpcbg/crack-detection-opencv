@@ -6,10 +6,10 @@ import numpy as np
 from os import listdir
 from os.path import isfile, join
 import argparse
+from utils import find_cracks
 
-split_size = 200
+split_size = 100
 
-# Argument parsing variable declared
 ap = argparse.ArgumentParser()
 
 ap.add_argument("-i", "--input",
@@ -42,6 +42,10 @@ for n, file_name in enumerate(file_names):
     # Save the image in Output Folder
     for r in range(0, img.shape[0], split_size):
         for c in range(0, img.shape[1], split_size):
-            cv2.imwrite(f"{output_path}/img_{n}_{r}_{c}.png", img[r:r + split_size, c:c + split_size, :])
+            split_img = img[r:r + split_size, c:c + split_size, :]
+            if find_cracks(split_img):
+                cv2.imwrite(f"{output_path}/Positive/img_{n}_{r}_{c}.png", split_img)
+            else:
+                cv2.imwrite(f"{output_path}/Rest/img_{n}_{r}_{c}.png", split_img)
 
 

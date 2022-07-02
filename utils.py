@@ -64,3 +64,13 @@ def plot_featured_image(featuredImg, original_img):
     plt.subplot(122), plt.imshow(featuredImg, cmap='gray')
     plt.title('Output Image'), plt.xticks([]), plt.yticks([])
     plt.show()
+
+
+def find_cracks(img):
+    edges = canny_edge_detection(img)
+    closing = morf_closing(edges)
+    contours = find_contours(closing, min_contour_area=100)
+    if contours:
+        return True
+    else:
+        return False

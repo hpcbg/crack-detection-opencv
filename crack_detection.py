@@ -1,7 +1,8 @@
 from utils import *
 
-image_path = 'input/P1040059-s.JPG'
+# image_path = 'input/P1040059-s.JPG'
 # image_path = 'input/img_0_400_800.png'
+image_path = 'input/img_6_700_1300.png'
 new_size = (1500, 1125)
 img = load_image(image_path)
 
@@ -23,8 +24,8 @@ show_image(contours_on_image)
 # bilateral = cv2.bilateralFilter(blur, 5, 75, 75)
 
 
-edges = canny_edge_detection(contours_on_image)
+# edges = canny_edge_detection(contours_on_image)
 
-create_featured_image(edges, img)
+# create_featured_image(edges, img)
 
 
