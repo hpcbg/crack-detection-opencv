@@ -3,11 +3,11 @@ import numpy as np
 import poly_point_isect as bot
 
 
-img = cv2.imread('input/parking.png')
+img = cv2.imread('../input/parking.png')
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 kernel_size = 5
-blur_gray = cv2.GaussianBlur(gray,(kernel_size, kernel_size), 0)
+blur_gray = cv2.GaussianBlur(gray, (kernel_size, kernel_size), 0)
 
 low_threshold = 50
 high_threshold = 150
@@ -61,6 +61,6 @@ for inter in intersections:
             lines_edges[int(b) + i, int(a) + j] = [0, 255, 0]
 
 
-cv2.imwrite('output/line_parking.png', lines_edges)
+cv2.imwrite('../output/line_parking.png', lines_edges)
 cv2.imshow('im', lines_edges)
 cv2.waitKey()

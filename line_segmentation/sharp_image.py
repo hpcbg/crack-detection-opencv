@@ -1,10 +1,9 @@
 import cv2
-import numpy as np
 
 # read image as grayscale
-# img = cv2.imread('input/k.png', cv2.IMREAD_GRAYSCALE)
-img = cv2.imread('input/P1040059-s.JPG', cv2.IMREAD_GRAYSCALE)
-img = cv2.resize(img, (1500, 1125))
+img = cv2.imread('../input/k.png', cv2.IMREAD_GRAYSCALE)
+# img = cv2.imread('../input/P1040059-s.JPG', cv2.IMREAD_GRAYSCALE)
+# img = cv2.resize(img, (1500, 1125))
 
 # threshold to binary
 thresh = cv2.threshold(img, 100, 255, cv2.THRESH_BINARY)[1]

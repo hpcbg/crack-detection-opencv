@@ -1,8 +1,9 @@
 from utils import *
 
-# image_path = 'input/P1040059-s.JPG'
+image_path = 'input/P1040059-s.JPG'
+# image_path = 'input/2000x1500_16_resized.jpg'
 # image_path = 'input/img_0_400_800.png'
-image_path = 'input/img_6_700_1300.png'
+# image_path = 'input/img_6_700_1300.png'
 new_size = (1500, 1125)
 img = load_image(image_path)
 
@@ -15,6 +16,7 @@ contours = find_contours(closing, min_contour_area=200)
 
 contours_on_image = draw_contours(img, contours, empty_img=True)
 show_image(contours_on_image)
+write_image(contours_on_image, 'output/contours_on_image.png')
 
 # # Image processing ( smoothing )
 # # Averaging

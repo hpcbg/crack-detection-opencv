@@ -5,12 +5,24 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
 
-def region_of_interest(img, vertices):
-    mask = np.zeros_like(img)
-    match_mask_color = 255
-    cv2.fillPoly(mask, vertices, match_mask_color)
-    masked_image = cv2.bitwise_and(img, mask)
-    return masked_image
+def average(image, lines):
+    left = []
+    right = []
+    for line in lines:
+        x1, y1, x2, y2 = line.reshape(4)
+        parameters = np.polyfit((x1, x2), (y1, y2), 1)
+        slope = parameters[0]
+        y_int = parameters[1]
+        if slope < 0:
+            left.append((slope, y_int))
+        else:
+            right.append((slope, y_int))
+
+    right_avg = np.average(right, axis=0)
+    left_avg = np.average(left, axis=0)
+    # left_line = make_points(image, left_avg)
+    # right_line = make_points(image, right_avg)
+    # return np.array([left_line, right_line])
 
 
 def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
@@ -29,10 +41,10 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=3):
         for x1, y1, x2, y2 in line:
             cv2.line(line_img, (x1, y1), (x2, y2), color, thickness)
 
-    # cv2.imshow('im', line_img)
-    # cv2.waitKey()
+    cv2.imshow('im', line_img)
+    cv2.waitKey()
 
-    img = cv2.addWeighted(img, 0.8, line_img, 1.0, 0.0)
+    # img = cv2.addWeighted(img, 0.8, line_img, 1.0, 0.0)
     return img
 
 
@@ -43,37 +55,29 @@ def pipeline(image):
     """
     height = image.shape[0]
     width = image.shape[1]
-    region_of_interest_vertices = [
-        (0, height),
-        # (0, height / 2),
-        (width / 2, height / 3),
-        # (width, height / 2),
-        (width, height),
-    ]
+
     gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+
+    kernel_size = 3
+    blur_gray = cv2.GaussianBlur(gray_image, (kernel_size, kernel_size), 0)
+
     cannyed_image = cv2.Canny(gray_image, 50, 200)
 
-    cropped_image = region_of_interest(
-        cannyed_image,
-        np.array(
-            [region_of_interest_vertices],
-            np.int32
-        ),
-    )
-
     lines = cv2.HoughLinesP(
-        cropped_image,
-        rho=6,
+        cannyed_image,
+        rho=8,
         theta=np.pi / 60,
         threshold=160,
         lines=np.array([]),
         minLineLength=40,
-        maxLineGap=25
+        maxLineGap=25,
     )
     # print(lines)
-    # img = draw_lines(gray_image, lines)
-    # plt.imshow(img)
-    # plt.show()
+    img = draw_lines(gray_image, lines)
+    plt.imshow(img)
+    plt.show()
+
+    average(None, lines)
 
     left_line_x = []
     left_line_y = []
@@ -123,8 +127,8 @@ def pipeline(image):
     return line_image, pts
 
 
-img_path = 'solidYellowCurve2.jpg'
-# img_path = '../input/P1040047-s.JPG'
+img_path = 'input/2000x1500_16_resized.jpg'
+# img_path = 'input/P1040047-s.JPG'
 # img_path = 'brockerLine.png'
 # img = cv2.imread(img_path)
 img = mpimg.imread(img_path)

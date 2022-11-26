@@ -41,6 +41,10 @@ def show_image(img):
     cv2.destroyAllWindows()
 
 
+def write_image(img, path):
+    cv2.imwrite(path, img)
+
+
 def create_featured_image(closing, original_img=None):
     # Create feature detecting method
     # sift = cv2.xfeatures2d.SIFT_create()
