@@ -6,7 +6,9 @@ from os.path import isfile, join
 import argparse
 
 
-def handle_images(input_file):
+def resize_image(input_file):
+    print(f'Processing image: {input_file}')
+
     input_path = args["input"]
 
     path = join(input_path, input_file)
@@ -26,9 +28,8 @@ def handle_images(input_file):
 
     # Save the image in Output Folder
     output_path = args["output"]
-    cv2.imwrite(
-        f'{output_path}/{input_file}_{resize_width}x{resize_height}.jpg', resized_image)
-    print(f'{output_path}/{input_file}_{resize_width}x{resize_height}.jpg')
+    cv2.imwrite(f'{output_path}/{input_file}_{resize_width}x{resize_height}.jpg', resized_image)
+
 
 # Argument parsing variable declared
 ap = argparse.ArgumentParser()
@@ -55,13 +56,18 @@ if __name__ == '__main__':
     # Find all the images in the provided images folder
     input_path = args["input"]
     files = [f for f in listdir(input_path) if isfile(join(input_path, f))]
-    # Create pool and map the files to the threads
+
+    # Get file names from the input folder
+    files = [f for f in listdir(input_path) if isfile(join(input_path, f))]
+
+    # If the number of CPUs is not set by the user, use all CPUs
     number_of_process = args.get('cpun')
     if number_of_process is None:
         number_of_process = cpu_count()
 
+    # Create pool and map the files to the threads
     p = Pool(processes=number_of_process)
-    p.map(handle_images, files)
+    p.map(resize_image, files)
     print("Images resized Successfully")
 
 

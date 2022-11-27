@@ -1,5 +1,3 @@
-
-
 # BentleyOttmann sweep-line implementation
 # (for finding all intersections in a set of line segments)
 
