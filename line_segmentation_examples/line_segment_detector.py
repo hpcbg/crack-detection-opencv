@@ -8,11 +8,9 @@ gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 kernel_size = 5
 blur_gray = cv2.GaussianBlur(gray, (kernel_size, kernel_size), 0)
-
 low_threshold = 50
 high_threshold = 150
 edges = cv2.Canny(blur_gray, low_threshold, high_threshold)
-
 rho = 1  # distance resolution in pixels of the Hough grid
 theta = np.pi / 180  # angular resolution in radians of the Hough grid
 threshold = 15  # minimum number of votes (intersections in Hough grid cell)

@@ -4,7 +4,7 @@ import cv2
 from os import listdir, mkdir
 from os.path import isfile, join
 import argparse
-from utils import find_cracks
+from utils import has_cracks
 
 
 def split_image(input_file):
@@ -26,7 +26,7 @@ def split_image(input_file):
             split_img = img[r:r + split_size, c:c + split_size, :]
             # If crack found in the tile, save in Positive.
             # Else, save in Rest, since this case is much more frequent.
-            if find_cracks(split_img):
+            if has_cracks(split_img):
                 cv2.imwrite(f"{output_path}/Positive/{input_file}_{r}_{c}.png", split_img)
             else:
                 cv2.imwrite(f"{output_path}/Rest/{input_file}_{r}_{c}.png", split_img)

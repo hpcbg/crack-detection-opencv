@@ -70,7 +70,7 @@ def plot_featured_image(featuredImg, original_img):
     plt.show()
 
 
-def find_cracks(img):
+def has_cracks(img):
     edges = canny_edge_detection(img)
     closing = morf_closing(edges)
     contours = find_contours(closing, min_contour_area=100)
